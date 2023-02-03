@@ -6,7 +6,7 @@ from framework.page_object import PageObject
 def open_browser():
     browser = PageObject()
     yield browser # return = yield
-    # тута закрыть браузер
+    # тута закрыть браузер 
 
 # НАШО?
 def return_title():
