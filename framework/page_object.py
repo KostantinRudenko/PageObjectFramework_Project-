@@ -9,10 +9,11 @@ class PageObject:
     def __init__(self): # This function open Steam's webside
         self.browser = webdriver.Chrome(ChromeDriverManager().install())
         self.browser.get(URL)
+        self.field = self.browser.find_element(By.XPATH, '//input[id="store_nav_search_term"]')
     def get_title_url(self):
         return self.browser.current_url
         # TODO - сделать функцию find_GTAV универсальной (аля find_game)
-    def find_game(self, name_game):
+    def find_games(self, name_game): # This function find game in steam
         field = self.browser.find_element(By.XPATH, '//input[id="store_nav_search_term"]')
         field.send_keys(name_game)
         field.send_keys(Keys.ARROW_DOWN)
