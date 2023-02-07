@@ -3,7 +3,7 @@
 This project performs different tests on Google's websides.
 # Why this project is useful? -
 The project is useful because it can perform a lot of tests once.
-# What libraries the project use?:
+# What libraries the project use?
 The project use pytest(main library), selenium, webdriver_manager. It also use chromedriver.
 You can install it on this webside - https://chromedriver.chromium.org/downloads.
 Chromedri version must be same to the version of Chrome browser. You can find out Chrome browser's version 
