@@ -12,7 +12,7 @@ import pytest
 @pytest.mark.TT0001
 @pytest.mark.parametrize('name_game', 
                          [('Grand Theft Auto V'), ('Portal 2'),
-                          ('Rust'), ('Half-Life 2'), ('RimWorld')]
+                          ('Rust'), ('Half-Life 2'), ('RimWorld'), ('Fallout 4')]
                         )
 def test_TT0001(open_browser, name_game):
     steam_game_title = open_browser

@@ -12,7 +12,6 @@ class PageObject:
         self.browser = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
         self.browser.get(URL)
         self.search_field = self.find_block('id', 'store_nav_search_term')
-        self.account = self.find_block('class', 'menuitem supernav username persona_name_text_content')
     def get_title_url(self):
         return self.browser.current_url
     
@@ -30,19 +29,19 @@ class PageObject:
         first_game = self.find_block('xpath', "//div[@class='col search_name ellipsis']/span[1]")
         first_game.click()
         return self.browser.title
+    def change_title(self):
+        self.browser.title = 'ILovePython'
+        return self.browser.title
     def steam_login(self): # This function log in to steam
-        community_button = self.find_block("class", 'menuitem supernav')
-        community_button.click()
-        login_start_button = self.find_block("class", 'btn_green_white_innerfade btn_medium')
-        login_start_button.click()
-        name_field = self.find_block('xpath', "//input[@class='newlogindialog_TextInput_2eKVn']")
-        name_field.send_keys(name)
-        password_field = self.find_block('xpath', "//input[@class='newlogindialog_TextInput_2eKVn']")
+        self.browser.get('https://store.steampowered.com/login/?redir=&redir_ssl=1&snr=1_4_4__global-header')
+        name_field = self.find_block('xpath', "//div/input/class='newlogindialog_TextInput_2eKVn'[@type='text']")
+        name_field.send_keys(username)
+        password_field = self.find_block('xpath', "//div/input/class='newlogindialog_TextInput_2eKVn'[@type='password']")
         password_field.send_keys(password)
-        login_end_button = self.find_block('class', 'newlogindialog_SubmitButton_2QgFE')
+        login_end_button = self.find_block('xpath', "//div[@class='newlogindialog_SubmitButton_2QgFE']")
         login_end_button.click()
-        self.account.click()
-        result = self.find_block('id', 'hello')
+        self.browser.get('https://steamcommunity.com/profiles/76561199476469925/home/')
+        result = self.find_block('xpath', "//div[@id='hello']")
         return result
     def close_browser(self): # This function close Chrome
         self.browser.close()
