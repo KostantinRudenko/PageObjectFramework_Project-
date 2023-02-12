@@ -1,3 +1,5 @@
+import time
+
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
@@ -6,6 +8,7 @@ from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 
 from framework.config import *
+from framework.exceptions import *
 class PageObject:
     def __init__(self): # This function open Steam's webside
         "ChromeDriverManager().install()"
@@ -43,13 +46,18 @@ class PageObject:
         self.browser.get('https://steamcommunity.com/profiles/76561199476469925/home/')
         result = self.find_block('xpath', "//div[@id='hello']")
         return result
-    def change_language(self): # This function change languege on Polish
-        language_choise_buttom = self.find_block('id', 'language_pulldown'); language_choise_buttom.click()
-        polish_language = self.find_block('xpath', "//div/a[@href='?l=polish']"); polish_language.click()
-        import time # need 'import time' so that the page can change the title to polish
-        time.sleep(3)
-        return self.browser.title
-    def close_browser(self): # This function close Chrome
+    def change_language(self, language): # This function change language
+        language_list = ['polish', 'english']
+        language_choice_button = self.find_block('id', 'language_pulldown')
+        language_choice_button.click()
+        if language in language_list:
+            result_language = self.find_block('xpath', f"//div/a[@href='?l={language}']") 
+            result_language.click()
+            time.sleep(3)
+            return self.browser.title
+        else:
+            raise LanguageNotFoundError
+    def close_browser(self): # This function close browser
         self.browser.close()
 
     '''

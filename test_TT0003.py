@@ -12,7 +12,9 @@ Kostantin Rudenko        11/02/23                    Initial version
 import pytest
 
 @pytest.mark.TT0003
-def test_TT0003(open_browser):
+@pytest.mark.parametrize(['language', 'expected_text'], [('polish', 'Witamy na Steam'),
+                                                        ('english', 'Welcome to Steam')])
+def test_TT0003(open_browser, language, expected_text):
     browser = open_browser
-    polish_title_text = browser.change_language()
-    assert polish_title_text == 'Witamy na Steam'
+    polish_title_text = browser.change_language(language)
+    assert polish_title_text == expected_text
