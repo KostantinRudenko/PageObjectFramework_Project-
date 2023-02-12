@@ -1,5 +1,5 @@
 '''
-Test Case #1 
+Test Case #2
 Description: Check, that you logged in to steam
 Resources: Main page
 

@@ -29,20 +29,26 @@ class PageObject:
         first_game = self.find_block('xpath', "//div[@class='col search_name ellipsis']/span[1]")
         first_game.click()
         return self.browser.title
-    def change_title(self):
+    '''def change_title(self):
         self.browser.title = 'ILovePython'
-        return self.browser.title
+        return self.browser.title'''
     def steam_login(self): # This function log in to steam
         self.browser.get('https://store.steampowered.com/login/?redir=&redir_ssl=1&snr=1_4_4__global-header')
         name_field = self.find_block('xpath', "//div/input/class='newlogindialog_TextInput_2eKVn'[@type='text']")
         name_field.send_keys(username)
-        password_field = self.find_block('xpath', "//div/input/class='newlogindialog_TextInput_2eKVn'[@type='password']")
+        password_field = self.find_block('xpath', "//div/input/[class='newlogindialog_TextInput_2eKVn'][@type='password']")
         password_field.send_keys(password)
         login_end_button = self.find_block('xpath', "//div[@class='newlogindialog_SubmitButton_2QgFE']")
         login_end_button.click()
         self.browser.get('https://steamcommunity.com/profiles/76561199476469925/home/')
         result = self.find_block('xpath', "//div[@id='hello']")
         return result
+    def change_language(self): # This function change languege on Polish
+        language_choise_buttom = self.find_block('id', 'language_pulldown'); language_choise_buttom.click()
+        polish_language = self.find_block('xpath', "//div/a[@href='?l=polish']"); polish_language.click()
+        import time # need 'import time' so that the page can change the title to polish
+        time.sleep(3)
+        return self.browser.title
     def close_browser(self): # This function close Chrome
         self.browser.close()
 
