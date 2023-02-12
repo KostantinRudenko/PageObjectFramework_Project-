@@ -1,4 +1,4 @@
-from time import sleep
+import time
 
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
@@ -8,6 +8,7 @@ from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 
 from framework.config import *
+from framework.exceptions import *
 class PageObject:
     def __init__(self): # This function open Steam's webside
         "ChromeDriverManager().install()"
@@ -33,6 +34,19 @@ class PageObject:
         first_game = self.find_block('xpath', "//div[@class='col search_name ellipsis']/span[1]")
         first_game.click()
         return self.browser.title
+
+    def change_language(self, language): # This function change language
+        language_list = ['polish', 'english']
+        language_choice_button = self.find_block('id', 'language_pulldown')
+        language_choice_button.click()
+        if language in language_list:
+            result_language = self.find_block('xpath', f"//div/a[@href='?l={language}']") 
+            result_language.click()
+            time.sleep(3)
+            return self.browser.title
+        else:
+            raise LanguageNotFoundError
+            
     def close_browser(self): # This function close Chrome
         self.browser.close()
 
