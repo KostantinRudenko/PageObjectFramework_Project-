@@ -1,5 +1,5 @@
 '''
-Test Case #4
+Test Case #5
 Description: Check, if you enter to search field something incomprehensible game name, you will get error.
 Resources: Main page
 
