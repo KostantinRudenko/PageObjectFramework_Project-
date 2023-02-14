@@ -5,7 +5,7 @@ Resources: Main page
 
 Automated by                Date                        Description
 -----------------------------------------------------------------------
-Kostantin Rudenko        03/02/23                    Initial version
+Kostantin Rudenko        014/02/23                    Initial version
 
 '''
 import pytest
