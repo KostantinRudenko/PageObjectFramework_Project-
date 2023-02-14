@@ -47,7 +47,15 @@ class PageObject:
         else:
             raise LanguageNotFoundError
     
-    def break_search_field(self, text):
+    def category_selection(self): # This function select category
+        category_button = self.find_block('id', 'genre_tab')
+        category_button.click()
+        tower_defence_button = self.find_block('class', 'popup_menu_subheader popup_genre_expand_header responsive_hidden')
+        tower_defence_button.click()
+        page_main_text = self.find_block('xpath', '//div/a[class="https://store.steampowered.com/category/tower_defense/?snr=1_4_4__12"]')
+        return page_main_text
+    
+    def break_search_field(self, text): # This function find game in search field with 
         search_field = self.find_block('id', 'store_nav_search_term')
         search_field.send_keys(text)
         search_field.send_keys(Keys.RETURN)
