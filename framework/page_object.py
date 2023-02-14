@@ -47,13 +47,6 @@ class PageObject:
         else:
             raise LanguageNotFoundError
     
-    def category_selection(self):
-        category_button = self.find_block('id', 'genre_tab')
-        category_button.click()
-        tower_defence_button = self.find_block('class', 'popup_menu_subheader popup_genre_expand_header responsive_hidden')
-        tower_defence_button.click()
-        page_main_text = self.find_block('class', 'contenthubmaincarousel_ContentHubTitle_9tb4j ContentHubTitle')
-        return page_main_text
     def break_search_field(self, text): # This function search 
         search_field = self.find_block('id', 'store_nav_search_term')
         search_field.send_keys(text)
