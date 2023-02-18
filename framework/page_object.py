@@ -47,26 +47,20 @@ class PageObject:
         else:
             raise LanguageNotFoundError
     
-    def break_search_field(self, text): # This function search 
+    def break_search_field(self, text): # This function find game in search field with 
         search_field = self.find_block('id', 'store_nav_search_term')
         search_field.send_keys(text)
         search_field.send_keys(Keys.RETURN)
         error = self.find_block('class', 'search_results_count')
-        if error:
-            return error
-        else:
-            raise ErrorNotFoudError
-    
-    def change_page_content(self):
-        game_name0 = self.find_block('class', 'app_name')
-        right_arrow = self.find_block('class', 'arrow right')
-        right_arrow.click()
-        game_name1 = self.find_block('class', 'app_name')
-        game_names = [game_name0, game_name1]
-        if game_name0 != game_name1:
-            return game_names
-        else:
-            raise ElementNotFoundError
+        return error
+
+    def save_check_name_game(self): # This function 
+        game_link = self.find_block('class', 'tab_item app_impression_tracked focus[0]')
+        name_game = self.find_block('xpath', '//div/class="tab_item_name"[1]')
+        game_link.click()
+        name_game_2 = self.find_block('id', 'appHubAppName')
+        names = [name_game, name_game_2]
+        return names
     
     def close_browser(self): # This function close Chrome
         self.browser.close()
