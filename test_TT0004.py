@@ -1,6 +1,6 @@
 '''
 Test Case #4
-Description: Check, that if you click right arrow next to content page, game's name on it will change.
+Description: Check, that name of game's tab is same to the name of the game on its main page
 Resources: Main page
 
 Automated by                Date                        Description
