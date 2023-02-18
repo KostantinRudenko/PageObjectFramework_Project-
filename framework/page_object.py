@@ -55,13 +55,16 @@ class PageObject:
         return error
 
     def save_check_name_game(self): # This function 
-        game_link = self.find_block('class', 'tab_item app_impression_tracked focus[0]')
-        name_game = self.find_block('xpath', '//div/class="tab_item_name"[1]')
+        name_game = self.find_block('xpath', '//*[@id="tab_newreleases_content"]/a[1]/div[3]/div[1]')
+        game_link = self.find_block('xpath', '//*[@id="tab_newreleases_content"]/a[1]')
         game_link.click()
-        name_game_2 = self.find_block('id', 'appHubAppName')
-        names = [name_game, name_game_2]
-        return names
-    
+        self.browser.implicitly_wait(10) # Don't ask me, it's need
+        name_game_2 = self.find_block('xpath', '//*[@id="appHubAppName"]')
+        names = [name_game.text, name_game_2.text]
+        if name_game is str and name_game_2 is str:
+            return names
+        else:
+            raise ElementNotStrError
     def close_browser(self): # This function close Chrome
         self.browser.close()
 

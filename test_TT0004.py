@@ -13,4 +13,4 @@ import pytest
 def test_TT0004(open_browser):
     browser = open_browser
     name = browser.save_check_name_game()
-    assert name[0] == name[2]
+    assert name[0] == name[1]

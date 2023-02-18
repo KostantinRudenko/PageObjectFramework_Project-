@@ -4,3 +4,6 @@ class ElementNotFoundError(Exception):
     pass
 class ErrorNotFoudError(Exception):
     pass
+
+class ElementNotStrError(Exception):
+    pass
