@@ -27,7 +27,9 @@ class PageObject:
             result = self.browser.find_element(By.ID, block)
         return result    
 
-
+    def get_title(self):
+        return self.browser.title
+    
     def find_title_game(self, name_game): # This function find game in steam
         self.search_field.send_keys(name_game)
         self.search_field.send_keys(Keys.RETURN)
@@ -47,6 +49,7 @@ class PageObject:
         else:
             raise LanguageNotFoundError
     
+<<<<<<< HEAD
     def category_selection(self): # This function select category
         category_button = self.find_block('id', 'genre_tab')
         category_button.click()
@@ -55,24 +58,21 @@ class PageObject:
         page_main_text = self.find_block('xpath', '//div/a[class="https://store.steampowered.com/category/tower_defense/?snr=1_4_4__12"]')
         return page_main_text
     
+=======
+>>>>>>> 183163579fe30a47dccb7e38b686772d46e89868
     def break_search_field(self, text): # This function find game in search field with 
         search_field = self.find_block('id', 'store_nav_search_term')
         search_field.send_keys(text)
         search_field.send_keys(Keys.RETURN)
         error = self.find_block('class', 'search_results_count')
         return error
-    
-    def change_page_content(self):
-        game_name0 = self.find_block('class', 'app_name')
-        right_arrow = self.find_block('class', 'arrow right')
-        right_arrow.click()
-        game_name1 = self.find_block('class', 'app_name')
-        game_names = [game_name0, game_name1]
-        if game_name0 != game_name1:
-            return game_names
-        else:
-            raise ElementNotFoundError
-    
+
+    def open_popular_game(self, link_number):
+        try:
+            game_link = self.find_block('xpath', f'//*[@id="tab_newreleases_content"]/a[{link_number}]')
+            game_link.click()
+        except TypeError:
+            raise ElementNotStrError
     def close_browser(self): # This function close Chrome
         self.browser.close()
 

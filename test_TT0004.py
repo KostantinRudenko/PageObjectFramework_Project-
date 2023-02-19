@@ -1,16 +1,21 @@
 '''
 Test Case #4
-Description: Check, that if you click right arrow next to content page, game's name on it will change.
+Description: Check, that name of game's tab is same to the name of the game on its main page
 Resources: Main page
 
 Automated by                Date                        Description
 -----------------------------------------------------------------------
-Kostantin Rudenko        03/02/23                    Initial version
+Kostantin Rudenko        17/02/23                    Initial version
 
 '''
 import pytest
 @pytest.mark.TT0004
-def test_TT0004(open_browser):
+@pytest.mark.parametrize('link_number, expected_result',[('1', 'The Last Haven'), ])
+def test_TT0004(open_browser, link_number, expected_result):
     browser = open_browser
-    names = browser.change_page_content()
-    assert names[0] != names[1]
+    browser.open_popular_game(link_number)
+    url_name = browser.get_title_url().replace('_', ' ')
+    title_name = browser.get_title()
+    results = [url_name, title_name]
+    for result in results:
+        assert expected_result in result
