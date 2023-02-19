@@ -2,7 +2,7 @@ class LanguageNotFoundError(Exception):
     pass
 class ElementNotFoundError(Exception):
     pass
-class ErrorNotFoudError(Exception):
+class ErrorNotFoundError(Exception):
     pass
 
 class ElementNotStrError(Exception):

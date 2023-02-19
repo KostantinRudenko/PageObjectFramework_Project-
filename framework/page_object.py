@@ -27,7 +27,9 @@ class PageObject:
             result = self.browser.find_element(By.ID, block)
         return result    
 
-
+    def get_title(self):
+        return self.browser.title
+    
     def find_title_game(self, name_game): # This function find game in steam
         self.search_field.send_keys(name_game)
         self.search_field.send_keys(Keys.RETURN)
@@ -54,16 +56,11 @@ class PageObject:
         error = self.find_block('class', 'search_results_count')
         return error
 
-    def save_check_name_game(self): # This function 
-        name_game = self.find_block('xpath', '//*[@id="tab_newreleases_content"]/a[1]/div[3]/div[1]')
-        game_link = self.find_block('xpath', '//*[@id="tab_newreleases_content"]/a[1]')
-        game_link.click()
-        self.browser.implicitly_wait(10) # Don't ask me, it's need
-        name_game_2 = self.find_block('xpath', '//*[@id="appHubAppName"]')
-        names = [name_game.text, name_game_2.text]
-        if name_game is str and name_game_2 is str:
-            return names
-        else:
+    def open_popular_game(self, link_number):
+        try:
+            game_link = self.find_block('xpath', f'//*[@id="tab_newreleases_content"]/a[{link_number}]')
+            game_link.click()
+        except TypeError:
             raise ElementNotStrError
     def close_browser(self): # This function close Chrome
         self.browser.close()

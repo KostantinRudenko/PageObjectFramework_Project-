@@ -10,7 +10,12 @@ Kostantin Rudenko        17/02/23                    Initial version
 '''
 import pytest
 @pytest.mark.TT0004
-def test_TT0004(open_browser):
+@pytest.mark.parametrize('link_number, expected_result',[('1', 'The Last Haven'), ])
+def test_TT0004(open_browser, link_number, expected_result):
     browser = open_browser
-    name = browser.save_check_name_game()
-    assert name[0] == name[1]
+    browser.open_popular_game(link_number)
+    url_name = browser.get_title_url().replace('_', ' ')
+    title_name = browser.get_title()
+    results = [url_name, title_name]
+    for result in results:
+        assert expected_result in result
