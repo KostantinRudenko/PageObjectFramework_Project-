@@ -5,7 +5,7 @@ Resources: Main page
 
 Automated by                Date                        Description
 -----------------------------------------------------------------------
-Kostantin Rudenko        014/02/23                    Initial version
+Kostantin Rudenko         14/02/23                    Initial version
 
 '''
 import pytest
@@ -13,5 +13,5 @@ import pytest
 @pytest.mark.parametrize('search_text', [('jiefijijefjifejiiefijf'), ('оуашоошуаішщфцщ'), ('ъ')])
 def test_TT0005(open_browser, search_text):
     browser = open_browser
-    none = browser.break_search_field(search_text)
+    none = browser.text_to_search_field(search_text)
     assert none == '0 results match your search.' or 'Результатов по вашему запросу: 0.'

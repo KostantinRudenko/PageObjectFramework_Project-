@@ -1,5 +1,5 @@
 # About project
-This project need to test different functions of Steam webside(https://store.steampowered.com/). It can independently perform easy and middle tasks like check that game in Steam or try to log in. All tasks are about testing of the webside.
+This project need to test different functions of Steam website(https://store.steampowered.com/). It can independently perform tasks. All tasks are about testing of the website.
 
 # Software environment
   ## Software (Programming & Modules)
