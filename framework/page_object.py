@@ -4,6 +4,7 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.common.action_chains import ActionChains
 
 from webdriver_manager.chrome import ChromeDriverManager
 
@@ -52,14 +53,16 @@ class PageObject:
             raise LanguageNotFoundError
     
     def category_select(self, column, row, title): # This function select category
-        category_panel_button = self.find_block('id', 'genre_tab')
+        category_panel_button = self.find_block('xpath', f'//*[@id="genre_flyout"]/div/div[{column}]/div[{row}]')
         category_panel_button.click()
         while title not in self.browser.title:
+            actions = ActionChains(self.browser)
             category_button = self.find_block('xpath', f'//*[@id="genre_flyout"]/div/div[{column}]/div[{row}]')
+            actions.move_to_element(category_button).perform()
             category_button.click()
         time.sleep(3)
-        page_main_text = self.find_block('xpath', '//*[@id="SaleSection_56339"]/div/div')
-        return page_main_text
+        page_main_text = self.find_block('xpath', '//*[@id="SaleSection_56339"]/div/div').text
+        return page_main_text.upper()
     
     def text_to_search_field(self, text):
         search_field = self.find_block('id', 'store_nav_search_term')
