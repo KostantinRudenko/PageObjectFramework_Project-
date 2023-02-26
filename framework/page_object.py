@@ -73,17 +73,14 @@ class PageObject:
 
     def open_popular_game(self, link_number):
         try:
-            first_game_name = self.find_block('xpath', f'//*[@id="tab_newreleases_content"]/a[{link_number}]/div[3]/div[1]').text
-            game_name_1 = first_game_name.__getattribute__('title')
-            game_link = self.find_block('xpath', f'//*[@id="tab_newreleases_content"]/a[{link_number}]')
-            game_link.click()
-            url = self.get_title_url()
-            if "agecheck" in self.get_title_url():
-                submit_button = self.find_block('css_sel', str('#view_product_page_btn'))
-                submit_button.click()
+            game_name_1 = self.find_block('xpath', f'//*[@id="tab_newreleases_content"]/a[{link_number}]/div[3]/div[1]').text
             # name of the game on its main page
-            name_game_2 = self.find_block('css_sel', '#appHubAppName').text
-            all_games_names = [str(game_name_1), str(name_game_2)]
+            actions = ActionChains(self.browser)
+            game_block = self.find_block('xpath', f'//*[@id="tab_newreleases_content"]/a[{link_number}]')
+            actions.move_to_element(game_block).perform()
+            time.sleep(2)
+            game_name_2 = self.find_block('xpath', f"//div[@class='tab_preview focus']/h2").text
+            all_games_names = [game_name_1, game_name_2]
             return all_games_names
         except TypeError:
             raise ElementNotStrError
