@@ -4,6 +4,7 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.common.action_chains import ActionChains
 
 from webdriver_manager.chrome import ChromeDriverManager
 
@@ -25,6 +26,8 @@ class PageObject:
             result = self.browser.find_element(By.CLASS_NAME, block)
         elif search_type == 'id':
             result = self.browser.find_element(By.ID, block)
+        elif search_type == 'css_sel':
+            result = self.browser.find_element(By.CSS_SELECTOR)
         return result    
 
     def get_title(self):
@@ -49,17 +52,36 @@ class PageObject:
         else:
             raise LanguageNotFoundError
     
-    def break_search_field(self, text): # This function find game in search field with 
+    def category_select(self, column, row, title): # This function select category
+        category_panel_button = self.find_block('xpath', f'//*[@id="genre_flyout"]/div/div[{column}]/div[{row}]')
+        category_panel_button.click()
+        while title not in self.browser.title:
+            actions = ActionChains(self.browser)
+            category_button = self.find_block('xpath', f'//*[@id="genre_flyout"]/div/div[{column}]/div[{row}]')
+            actions.move_to_element(category_button).perform()
+            category_button.click()
+        time.sleep(3)
+        page_main_text = self.find_block('xpath', '//*[@id="SaleSection_56339"]/div/div').text
+        return page_main_text.upper()
+    
+    def text_to_search_field(self, text):
         search_field = self.find_block('id', 'store_nav_search_term')
         search_field.send_keys(text)
         search_field.send_keys(Keys.RETURN)
-        error = self.find_block('class', 'search_results_count')
-        return error
+        find_results = self.find_block('class', 'search_results_count')
+        return find_results
 
     def open_popular_game(self, link_number):
         try:
-            game_link = self.find_block('xpath', f'//*[@id="tab_newreleases_content"]/a[{link_number}]')
-            game_link.click()
+            game_name_1 = self.find_block('xpath', f'//*[@id="tab_newreleases_content"]/a[{link_number}]/div[3]/div[1]').text
+            # name of the game on its main page
+            actions = ActionChains(self.browser)
+            game_block = self.find_block('xpath', f'//*[@id="tab_newreleases_content"]/a[{link_number}]')
+            actions.move_to_element(game_block).perform()
+            time.sleep(2)
+            game_name_2 = self.find_block('xpath', f"//div[@class='tab_preview focus']/h2").text
+            all_games_names = [game_name_1, game_name_2]
+            return all_games_names
         except TypeError:
             raise ElementNotStrError
     def close_browser(self): # This function close Chrome

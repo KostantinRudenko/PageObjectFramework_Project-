@@ -10,12 +10,10 @@ Kostantin Rudenko        17/02/23                    Initial version
 '''
 import pytest
 @pytest.mark.TT0004
-@pytest.mark.parametrize('link_number, expected_result',[('1', 'The Last Haven'), ])
-def test_TT0004(open_browser, link_number, expected_result):
+@pytest.mark.parametrize('link_number', [('1'), ('2'), ('3'), ('4'), ('5'),
+                                         ('6'), ('7'), ('8')])
+def test_TT0004(open_browser, link_number):
     browser = open_browser
-    browser.open_popular_game(link_number)
-    url_name = browser.get_title_url().replace('_', ' ')
-    title_name = browser.get_title()
-    results = [url_name, title_name]
-    for result in results:
-        assert expected_result in result
+    results = browser.open_popular_game(link_number)
+    assert results[0] == results[1] # result[0] is first name of the game on main page of Steam
+                                    # result[1] is second name of the game on main page of this game
