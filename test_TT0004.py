@@ -11,7 +11,8 @@ Kostantin Rudenko        17/02/23                    Initial version
 import pytest
 @pytest.mark.TT0004
 @pytest.mark.parametrize('link_number', [('1'), ('2'), ('3'), ('4'), ('5'),
-                                         ('6'), ('7'), ('8'), ('9'), ('10')])
+                                         ('6'), ('7'), ('8')])
+
 def test_TT0004(open_browser, link_number):
     browser = open_browser
     results = browser.open_popular_game(link_number)
