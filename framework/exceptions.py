@@ -7,3 +7,6 @@ class ErrorNotFoundError(Exception):
 
 class ElementNotStrError(Exception):
     pass
+
+class ElemantNotIntError(Exception):
+    pass
