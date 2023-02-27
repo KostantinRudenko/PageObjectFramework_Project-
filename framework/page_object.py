@@ -26,8 +26,6 @@ class PageObject:
             result = self.browser.find_element(By.CLASS_NAME, block)
         elif search_type == 'id':
             result = self.browser.find_element(By.ID, block)
-        elif search_type == 'css_sel':
-            result = self.browser.find_element(By.CSS_SELECTOR)
         return result    
 
     def get_title(self):
@@ -52,17 +50,15 @@ class PageObject:
         else:
             raise LanguageNotFoundError
     
-    def category_select(self, column, row, title): # This function select category
-        category_panel_button = self.find_block('xpath', f'//*[@id="genre_flyout"]/div/div[{column}]/div[{row}]')
-        category_panel_button.click()
-        while title not in self.browser.title:
-            actions = ActionChains(self.browser)
-            category_button = self.find_block('xpath', f'//*[@id="genre_flyout"]/div/div[{column}]/div[{row}]')
-            actions.move_to_element(category_button).perform()
-            category_button.click()
-        time.sleep(3)
-        page_main_text = self.find_block('xpath', '//*[@id="SaleSection_56339"]/div/div').text
-        return page_main_text.upper()
+    def check_discounts(self, link_number): # This function select popular sections on main page
+        try:
+            discount_content_button = self.find_block('xpath', '//*[@id="tab_specials_content_trigger"]/div')
+            discount_content_button.click()
+            discount = self.find_block('xpath', f'//*[@id="tab_specials_content"]/a[{link_number}]/div[2]/div[1]').text
+            discount = int(discount.replace('%', ''))
+            return discount
+        except TypeError:
+            raise ElemantNotIntError
     
     def text_to_search_field(self, text):
         search_field = self.find_block('id', 'store_nav_search_term')
