@@ -1,6 +1,6 @@
 '''
 Test Case #7
-Description: 
+Description: Check, that product price are the same as a price on the product page
 Resources: Main page
 
 Automated by                Date                        Description
