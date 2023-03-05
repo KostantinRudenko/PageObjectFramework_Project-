@@ -10,3 +10,6 @@ class ElementNotStrError(Exception):
 
 class ElemantNotIntError(Exception):
     pass
+
+class PriceNotFoundError(Exception):
+    pass

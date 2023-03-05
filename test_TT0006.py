@@ -16,5 +16,5 @@ import pytest
 def test_TT0006(open_browser, link_number):
     browser = open_browser
     number = browser.check_discounts(link_number)
-    assert isinstance(number, int)
+    assert isinstance(number, int) # This function check types
     assert number < 0
