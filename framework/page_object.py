@@ -15,6 +15,7 @@ class PageObject:
         "ChromeDriverManager().install()"
         self.browser = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
         self.browser.get(URL)
+        
         self.search_field = self.find_block('id', 'store_nav_search_term')
 
     def get_title_url(self):
@@ -32,12 +33,24 @@ class PageObject:
     def get_title(self):
         return self.browser.title
     
-    def find_title_game(self, name_game): # This function find game in steam
-        self.search_field.send_keys(name_game)
-        self.search_field.send_keys(Keys.RETURN)
+    def find_title_game(self, link_number): # This function find game in steam
+
+        steam_button = self.find_block('xpath', '//*[@id="logo_holder"]/a/img')
+        steam_button.click()
+
+        game_names = ['Grand Theft Auto V', 'Portal 2', 'Rust', 'Half-Life 2', 'RimWorld', 'Fallout 4']
+        game_name = game_names[link_number]
+        
+        search_field = self.find_block('id', 'store_nav_search_term')
+        search_field.send_keys(game_name)
+        search_field.send_keys(Keys.RETURN)
+        
         first_game = self.find_block('xpath', "//div[@class='col search_name ellipsis']/span[1]")
         first_game.click()
-        return self.browser.title
+
+        assert_elements = [(game_names[link_number]), (self.browser.title)]
+
+        return assert_elements
 
     def change_language(self, language): # This function change language
         language_list = ['polish', 'english', 'italian', 'german', 'french']
@@ -130,6 +143,7 @@ class PageObject:
         return tab_elem
 
     def close_browser(self) -> None: # This function close Chrome
+
         self.browser.close()
 
     '''
