@@ -11,12 +11,12 @@ Kostantin Rudenko        05/03/23                    Initial version
 
 import pytest
 @pytest.mark.TT0007
-@pytest.mark.parametrize('link_number', [('1'), ('2'), ('3'), ('4'), ('5'),
-                                         ('6'), ('7'), ('8'), ('9'), ('10')])
-def test_TT0007(open_browser, link_number):
+def test_TT0007(open_browser):
     browser = open_browser
-    price = browser.check_prices(link_number)
-    if price[1] is None:
-        assert True # Age check does not pass, so I have to set True
-    else:
-        assert price[0] == price[1]
+    link_numbers = browser.generate_link_numbers(1, 10)
+    for link in link_numbers:
+        price = browser.check_prices(link)
+        if price[1] is None:
+            assert True # Age check does not pass, so I have to set True
+        else:
+            assert price[0] == price[1]

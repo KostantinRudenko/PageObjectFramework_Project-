@@ -83,6 +83,8 @@ class PageObject:
             raise ElementNotStrError
         
     def check_prices(self, link_number) -> list:
+        steam_button = self.find_block('xpath', '//*[@id="logo_holder"]/a/img')
+        steam_button.click()
         usual_game_price = self.find_block('xpath', f'//*[@id="tab_newreleases_content"]/a[{link_number}]/div[2]/div/div').text
         discount_final_price = self.find_block('xpath', f'//div[@class="tab_content"]/a[{link_number}]/div[2]/div[2]/div[2]').text
 
@@ -115,6 +117,18 @@ class PageObject:
 
         all_prices = [price_1, price_2]
         return all_prices
+    
+    def generate_link_numbers(self, limit, link_amount):
+        link_numbers = [str(link) for link in range(limit, link_amount + 1)]
+        return link_numbers
+
+    def find_tab_elem(self, link_number):
+        tab_elem = self.find_block('xpath', f"//div[@class='supernav_container']/a[{link_number}]")
+        tab_elem_text = tab_elem.text
+        tab_elem.click()
+        
+        return tab_elem
+
     def close_browser(self) -> None: # This function close Chrome
         self.browser.close()
 
