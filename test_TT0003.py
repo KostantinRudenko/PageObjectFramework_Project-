@@ -16,8 +16,8 @@ import pytest
                                                         ('english', 'Welcome to Steam'),
                                                         ('italian', 'Benvenuto su STEAM'),
                                                         ('german', 'Willkommen bei Steam!'),
-                                                        ('french', 'Benvenuto su STEAM')])
+                                                        ('french', 'Benvenuto sur STEAM')])
 def test_TT0003(open_browser, language, expected_text):
     browser = open_browser
-    polish_title_text = browser.change_language(language)
-    assert polish_title_text == expected_text
+    title_text = browser.change_language(language)
+    assert title_text == expected_text
