@@ -5,7 +5,7 @@ Resources: Main page
 
 Automated by                Date                        Description
 -----------------------------------------------------------------------
-Kostantin Rudenko                              Initial version
+Kostantin Rudenko           11/03/23                    Initial version
 
 '''
 
