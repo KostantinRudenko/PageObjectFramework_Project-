@@ -10,10 +10,11 @@ from webdriver_manager.chrome import ChromeDriverManager
 
 from framework.config import *
 from framework.exceptions import *
+
 class PageObject:
     def __init__(self): # This function open Steam's webside
-        "ChromeDriverManager().install()"
         self.browser = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
+        self.browser.set_window_size(1336,800)
         self.browser.get(URL)
         
         self.search_field = self.find_block('id', 'store_nav_search_term')
@@ -95,7 +96,7 @@ class PageObject:
         except TypeError:
             raise ElementNotStrError
         
-    def check_prices(self, link_number) -> list:
+    def check_prices(self, link_number) -> list: # This function check prices of ten popular games
         steam_button = self.find_block('xpath', '//*[@id="logo_holder"]/a/img')
         steam_button.click()
         usual_game_price = self.find_block('xpath', f'//*[@id="tab_newreleases_content"]/a[{link_number}]/div[2]/div/div').text
@@ -132,15 +133,30 @@ class PageObject:
         return all_prices
     
     def generate_link_numbers(self, limit, link_amount):
-        link_numbers = [str(link) for link in range(limit, link_amount + 1)]
+        link_numbers = [str(link) for link in range(limit, link_amount - 1)]
         return link_numbers
 
-    def find_tab_elem(self, link_number):
-        tab_elem = self.find_block('xpath', f"//div[@class='supernav_container']/a[{link_number}]")
-        tab_elem_text = tab_elem.text
-        tab_elem.click()
+    def find_genre_name(self, link_number, language='english'): # This function check genre names
+        self.browser.get(URL)
         
-        return tab_elem
+        title = self.browser.title
+        if title != 'Welcome to Steam':
+            language_choice_button = self.find_block('id', 'language_pulldown')
+            language_choice_button.click()
+        
+            result_language = self.find_block('xpath', f"//div/a[@href='?l={language}']") 
+            result_language.click()
+        
+            time.sleep(3)
+
+        genre_button = self.find_block('xpath', f'//*[@id="responsive_page_template_content"]/div[1]/div[1]/div/div[2]/a[{link_number}]')
+        genre_name = genre_button.text
+        genre_button.click()
+        genre_name = genre_name.upper()
+
+        genre_main_page_text = self.find_block('xpath', '//*[@class="contenthubmaincarousel_ContentHubTitle_9tb4j ContentHubTitle"]').text
+        names = [genre_name, genre_main_page_text]
+        return names
 
     def close_browser(self) -> None: # This function close Chrome
 
@@ -148,6 +164,6 @@ class PageObject:
 
     '''
     TODO:
-    1. Составить тест-план (~15 тестов)
+    1. Составить тест-план (~10 тестов)
     2. Выполнить все TODO
     '''
