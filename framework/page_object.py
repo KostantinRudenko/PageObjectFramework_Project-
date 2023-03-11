@@ -138,32 +138,25 @@ class PageObject:
 
     def find_genre_name(self, link_number, language='english'): # This function check genre names
         self.browser.get(URL)
-
-        def main_function(link_number):
-            genre_button = self.find_block('xpath', f'//*[@id="responsive_page_template_content"]/div[1]/div[1]/div/div[2]/a[{link_number}]')
-            
-            genre_name = genre_button.text
-            genre_name = genre_name.upper()
-
-            genre_button.click()
-
-            genre_main_page_text = self.find_block('xpath', '//*[@id="SaleSection_55903"]/div/div').text
-            names = [genre_name, genre_main_page_text]
-            return names
-
-        language_choice_button = self.find_block('id', 'language_pulldown')
-        language_choice_button.click()
-
-        result_language = self.find_block('xpath', f"//div/a[@href='?l={language}']")
-        if result_language.is_displayed() == True: 
+        
+        title = self.browser.title
+        if title != 'Welcome to Steam':
+            language_choice_button = self.find_block('id', 'language_pulldown')
+            language_choice_button.click()
+        
+            result_language = self.find_block('xpath', f"//div/a[@href='?l={language}']") 
             result_language.click()
+        
             time.sleep(3)
-            
-            result = main_function(link_number)
-            return result
-        elif result_language.is_displayed() == False:
-            result = main_function(link_number)
-            return result
+
+        genre_button = self.find_block('xpath', f'//*[@id="responsive_page_template_content"]/div[1]/div[1]/div/div[2]/a[{link_number}]')
+        genre_name = genre_button.text
+        genre_button.click()
+        genre_name = genre_name.upper()
+
+        genre_main_page_text = self.find_block('xpath', '//*[@class="contenthubmaincarousel_ContentHubTitle_9tb4j ContentHubTitle"]').text
+        names = [genre_name, genre_main_page_text]
+        return names
 
     def close_browser(self) -> None: # This function close Chrome
 
@@ -171,6 +164,6 @@ class PageObject:
 
     '''
     TODO:
-    1. Составить тест-план (~15 тестов)
+    1. Составить тест-план (~10 тестов)
     2. Выполнить все TODO
     '''
