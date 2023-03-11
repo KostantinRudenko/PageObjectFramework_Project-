@@ -16,6 +16,9 @@ This project need to test different functions of Steam website(https://store.ste
    * Chrome
    ### Webdriver
    * Chromedriver (https://chromedriver.chromium.org/downloads); **IMPORTANT!!!** Version of chromdriver **must** be same to Chrome browser version. You can see Chrome version here - chrome://settings/help (Copy it in Chrome as URL-adress).
+# Terminal
+   ## Test run
+   * To run the test need open terminal (**Ctrl + Shift + ~**) and enter `pytest test_TT<test_number>.py`.
 # Other
 * User can get help by typing "@Kostantin_Rudenko" in the contact search field in Telegram.
 * Kostantin Rudenko support project and contribute to the project.
