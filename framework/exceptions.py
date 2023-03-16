@@ -13,3 +13,9 @@ class ElemantNotIntError(Exception):
 
 class PriceNotFoundError(Exception):
     pass
+
+class GameNotFoundError(Exception):
+    pass
+
+class YouAreDebilError(Exception):
+    pass
