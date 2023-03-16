@@ -181,13 +181,31 @@ class PageObject:
         except:
             game_price = self.find_block('xpath', '//*[@class="game_purchase_action"]/div/div[1]')
         return int(game_price.text.replace(symbol, ''))
+    
+    def click_category(self, link_number, language='english') -> str:
+        self.browser.get(URL)
+
+        title = self.browser.title
+        if title != 'Welcome to Steam':
+            language_choice_button = self.find_block('id', 'language_pulldown')
+            language_choice_button.click()
+        
+            result_language = self.find_block('xpath', f"//div/a[@href='?l={language}']") 
+            result_language.click()
+        
+            time.sleep(3)
+
+        category = self.find_block('xpath',
+        f"//div[@class='carousel_items store_capsule_container responsive_scroll_snap_ctn']/div/a[{link_number}]")
+        category_name = self.find_block('xpath',
+        f'//*[@id="responsive_page_template_content"]/div[1]/div[2]/div[5]/div/div[2]/div/div[1]/div[1]/a[{link_number}]/div[2]/span').text
+        
+        category.click()
+
+        main_category_page_name = self.find_block('xpath', '//*[@class="contenthubmaincarousel_ContentHubTitleCtn_61ECB ContentHubTitleCtn"]/div').text
+
+        return [category_name.upper(), main_category_page_name.upper()]
 
     def close_browser(self) -> None: # This function close Chrome
 
         self.browser.close()
-
-    '''
-    TODO:
-    1. Составить тест-план (~10 тестов)
-    2. Выполнить все TODO
-    '''
