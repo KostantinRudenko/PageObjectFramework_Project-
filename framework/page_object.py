@@ -132,8 +132,8 @@ class PageObject:
         all_prices = [price_1, price_2]
         return all_prices
     
-    def generate_link_numbers(self, limit, link_amount):
-        link_numbers = [str(link) for link in range(limit, link_amount - 1)]
+    def generate_link_numbers(self, __limit, __link_amount):
+        link_numbers = [str(link) for link in range(__limit, __link_amount + 1)]
         return link_numbers
 
     def find_genre_name(self, link_number, language='english'): # This function check genre names
@@ -157,6 +157,30 @@ class PageObject:
         genre_main_page_text = self.find_block('xpath', '//*[@class="contenthubmaincarousel_ContentHubTitle_9tb4j ContentHubTitle"]').text
         names = [genre_name, genre_main_page_text]
         return names
+
+    def find_price_less_80(self, link_number, symbol='₴') -> int:
+        # This function saves and returns prices of games, that are relevant to the content "Under 80"
+        self.browser.get(URL)
+        self.browser.execute_script('window.scrollBy(0, 3900)') # This function scroll down page
+        time.sleep(2)
+
+        game = self.find_block('xpath', f'//div[@class="carousel_container paging_capsules specials_under10"]/div/div/a[{link_number}]')
+        game.click()
+        
+        game_price = None
+
+        try:
+            discount = self.find_block('xpath', '//div[@class="game_purchase_action"]/div[1]/div[1]/div[1]').is_displayed()
+            discount_2 = self.find_block('xpath','//div[@class="discount_block game_purchase_discount"]/div[2]').is_displayed()
+            if discount == True:
+                game_price = self.find_block('xpath', '//div[@class="discount_final_price"][1]')
+            elif discount_2 == True:
+                game_price = self.find_block('xpath', '//div[@class="game_purchase_price price"]')
+            else:
+                raise PriceNotFoundError
+        except:
+            game_price = self.find_block('xpath', '//*[@class="game_purchase_action"]/div/div[1]')
+        return int(game_price.text.replace(symbol, ''))
 
     def close_browser(self) -> None: # This function close Chrome
 
