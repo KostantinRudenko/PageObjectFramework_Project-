@@ -1,5 +1,5 @@
 '''
-Test Case #9
+Test Case #10
 Description: Check that, if you click one of category buttons, corresponding page will open
 Resources: Main page
 
@@ -11,6 +11,7 @@ Kostantin Rudenko           16/03/23                    Initial version
 
 import pytest
 @pytest.mark.TT0010
+
 def test_TT0010(open_browser):
     browser = open_browser
     link_numbers = browser.generate_link_numbers(1, 4)

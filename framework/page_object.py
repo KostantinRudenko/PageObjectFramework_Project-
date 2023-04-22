@@ -205,6 +205,41 @@ class PageObject:
         main_category_page_name = self.find_block('xpath', '//*[@class="contenthubmaincarousel_ContentHubTitleCtn_61ECB ContentHubTitleCtn"]/div').text
 
         return [category_name.upper(), main_category_page_name.upper()]
+    
+    def check_streams(self, link_nnumber, language='english'):
+        self.browser.get(URL)
+
+        title = self.browser.title
+        if title != 'Welcome to Steam':
+            language_choice_button = self.find_block('id', 'language_pulldown')
+            language_choice_button.click()
+
+            result_language = self.find_block('xpath', f"//div/a[@href='?l={language}']") 
+            result_language.click()
+        
+            time.sleep(3)
+        
+        self.browser.execute_script('window.scrollBy(0, 3900)') # This function scroll down page
+        time.sleep(2)
+        
+        stream_game_name = self.find_block('xpath',
+                                           f'//*[@id="live_streams_carousel"]/div/div/a[{link_nnumber}]/div[2]/span[1]')
+        stream_game_link = self.find_block('xpath',
+                                           f'//*[@id="live_streams_carousel"]/div/div/a[{link_nnumber}]')
+        stream_game_link.click()
+        
+        cur_url = self.get_title_url()
+        if 'agecheck' in cur_url:
+            return True
+
+        time.sleep(4)
+
+        self.browser.execute_script('window.scrollBy(0, 3000)') # This function scroll down page
+        time.sleep(1)
+
+        game_main_page_name = self.find_block('xpath', '//*[@id="genresAndManufacturer"]/b[1]').text
+
+        return [stream_game_name.text, game_main_page_name]
 
     def close_browser(self) -> None: # This function close Chrome
 
