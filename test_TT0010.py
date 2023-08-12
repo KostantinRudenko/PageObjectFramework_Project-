@@ -1,6 +1,7 @@
 '''
-Test Case #9
-Description: Check that, if you click one of category buttons, corresponding page will open
+Test Case #10
+Description: Check that, if try to click one of category buttons, corresponding page
+will open
 Resources: Main page
 
 Automated by                Date                        Description

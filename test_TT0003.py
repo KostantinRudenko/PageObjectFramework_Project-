@@ -1,7 +1,7 @@
 '''
 Test Case #3
-Description: Check, if you change your language, you will see inscriptions on
-the language which you have choosen.
+Description: Check, if the language was changed, inscriptions will be showed on
+the language which has been choosen.
 Resources: Main page
 
 Automated by                Date                        Description

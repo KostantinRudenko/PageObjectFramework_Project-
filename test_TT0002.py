@@ -1,6 +1,6 @@
 '''
 Test Case #2
-Description: Check, that you logged in to steam
+Description: Check, that loging in to steam
 Resources: Main page
 
 Automated by                Date                        Description

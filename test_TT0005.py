@@ -1,6 +1,7 @@
 '''
 Test Case #5
-Description: Check, if you enter to search field something incomprehensible game name, you will get error.
+Description: Check, if incomprehensible game name enter into search field,
+the error page will be opened.
 Resources: Main page
 
 Automated by                Date                        Description
